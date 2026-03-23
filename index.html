@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Анкета разработчика | Регистрационная форма</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(145deg, #e0eaf4 0%, #cfdef3 100%);
+            font-family: 'Segoe UI', 'Roboto', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+            padding: 2rem 1.5rem;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* главная карточка формы */
+        .form-container {
+            max-width: 980px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.97);
+            backdrop-filter: blur(0px);
+            border-radius: 2rem;
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.35), 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+
+        /* хедер с градиентом */
+        .form-header {
+            background: linear-gradient(135deg, #1a2a3f, #0f1a2a);
+            padding: 1.8rem 2.5rem;
+            color: white;
+        }
+
+        .form-header h1 {
+            font-weight: 600;
+            font-size: 1.9rem;
+            letter-spacing: -0.3px;
+            margin-bottom: 0.3rem;
+        }
+
+        .form-header p {
+            font-size: 0.95rem;
+            opacity: 0.85;
+            margin-top: 0.4rem;
+        }
+
+        /* основная форма */
+        .form-body {
+            padding: 2rem 2.5rem;
+        }
+
+        /* группы полей */
+        .field-group {
+            margin-bottom: 1.7rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .field-group label {
+            width: 180px;
+            font-weight: 600;
+            color: #1f2e45;
+            font-size: 0.95rem;
+            padding-top: 0.6rem;
+            flex-shrink: 0;
+        }
+
+        .field-group .input-wrapper {
+            flex: 1;
+            min-width: 220px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 1rem;
+            font-size: 0.95rem;
+            font-family: inherit;
+            background-color: #fefefe;
+            transition: all 0.2s ease;
+            outline: none;
+            color: #1e293b;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
+            background-color: #ffffff;
+        }
+
+        /* радио группа */
+        .radio-group {
+            display: flex;
+            gap: 1.8rem;
+            align-items: center;
+            flex-wrap: wrap;
+            background: #f8fafc;
+            padding: 0.6rem 1rem;
+            border-radius: 1rem;
+            border: 1.5px solid #e2edf7;
+        }
+
+        .radio-group label {
+            width: auto;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            cursor: pointer;
+            padding-top: 0;
+            color: #1e2a3e;
+        }
+
+        .radio-group input {
+            width: 18px;
+            height: 18px;
+            accent-color: #3b82f6;
+            margin: 0;
+        }
+
+        /* чекбокс контракта */
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: #f8fafd;
+            padding: 0.6rem 1rem;
+            border-radius: 1rem;
+            border: 1px solid #e2edf7;
+        }
+
+        .checkbox-wrapper input {
+            width: 20px;
+            height: 20px;
+            accent-color: #2563eb;
+            margin: 0;
+            flex-shrink: 0;
+        }
+
+        .checkbox-wrapper label {
+            font-weight: 500;
+            color: #1e2a3f;
+            cursor: pointer;
+            user-select: none;
+            width: auto;
+            margin: 0;
+        }
+
+        /* мультиселект (языки) */
+        .lang-select {
+            background: #f8fafc;
+            border-radius: 1rem;
+            padding: 0.4rem 0.2rem;
+        }
+
+        select[multiple] {
+            height: auto;
+            min-height: 140px;
+            background: white;
+            cursor: pointer;
+        }
+
+        select[multiple] option {
+            padding: 0.6rem 0.8rem;
+            border-bottom: 1px solid #ecf3f9;
+            font-weight: 450;
+        }
+
+        select[multiple] option:checked {
+            background: #3b82f6 linear-gradient(0deg, #3b82f6 0%, #3b82f6 100%);
+            color: white;
+        }
+
+        /* текстовая область */
+        textarea {
+            resize: vertical;
+            min-height: 110px;
+            line-height: 1.5;
+        }
+
+        /* кнопка сохранения */
+        .action-buttons {
+            margin-top: 2rem;
+            text-align: right;
+            border-top: 1px solid #e9eef3;
+            padding-top: 1.8rem;
+        }
+
+        .save-btn {
+            background: linear-gradient(95deg, #1e3a5f, #0f2b44);
+            border: none;
+            padding: 0.9rem 2.2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 2rem;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            letter-spacing: 0.3px;
+        }
+
+        .save-btn:hover {
+            background: linear-gradient(95deg, #0f2c47, #0a1e32);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 20px -12px rgba(0, 0, 0, 0.3);
+        }
+
+        .save-btn:active {
+            transform: translateY(1px);
+        }
+
+        /* сообщение после сохранения */
+        .toast-message {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) scale(0.9);
+            background: #1f2937;
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border-radius: 60px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            pointer-events: none;
+            z-index: 1000;
+            backdrop-filter: blur(4px);
+            background: #0f172ad9;
+        }
+
+        .toast-message.show {
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
+        }
+
+        /* адаптив */
+        @media (max-width: 720px) {
+            .form-body {
+                padding: 1.5rem;
+            }
+            .field-group {
+                flex-direction: column;
+                gap: 0.4rem;
+            }
+            .field-group label {
+                width: 100%;
+                padding-bottom: 0.2rem;
+            }
+            .radio-group {
+                width: 100%;
+                justify-content: flex-start;
+            }
+            .form-header h1 {
+                font-size: 1.6rem;
+            }
+        }
+
+        /* подсказки */
+        .hint-text {
+            font-size: 0.7rem;
+            color: #5b6e8c;
+            margin-top: 0.3rem;
+            margin-left: 0.2rem;
+        }
+
+        hr {
+            margin: 0.2rem 0 1rem;
+            border: 0;
+            height: 1px;
+            background: linear-gradient(to right, #cbdde9, transparent);
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <div class="form-header">
+        <h1>📄 Регистрационная анкета</h1>
+        <p>Заполните данные о себе — ваше портфолио для IT-сообщества</p>
+    </div>
+
+    <div class="form-body">
+        <form id="developerForm" action="#" method="post">
+            <!-- 1) ФИО (текстовое поле) -->
+            <div class="field-group">
+                <label for="fullname">👤 ФИО <span style="color:#e53e3e;">*</span></label>
+                <div class="input-wrapper">
+                    <input type="text" id="fullname" name="fullname" placeholder="Иванов Иван Иванович" required>
+                </div>
+            </div>
+
+            <!-- 2) Телефон (tel) -->
+            <div class="field-group">
+                <label for="phone">📞 Телефон</label>
+                <div class="input-wrapper">
+                    <input type="tel" id="phone" name="phone" placeholder="+7 (999) 123-45-67" pattern="[\+0-9\s\-\(\)]+">
+                    <div class="hint-text">Формат любой, рекомендуется +7 или 8</div>
+                </div>
+            </div>
+
+            <!-- 3) e-mail (email) -->
+            <div class="field-group">
+                <label for="email">✉️ E-mail <span style="color:#e53e3e;">*</span></label>
+                <div class="input-wrapper">
+                    <input type="email" id="email" name="email" placeholder="ivanov@example.com" required>
+                </div>
+            </div>
+
+            <!-- 4) дата рождения (поле даты) -->
+            <div class="field-group">
+                <label for="birthdate">🎂 Дата рождения</label>
+                <div class="input-wrapper">
+                    <input type="date" id="birthdate" name="birthdate">
+                </div>
+            </div>
+
+            <!-- 5) пол (радиокнопки) -->
+            <div class="field-group">
+                <label>⚥ Пол</label>
+                <div class="input-wrapper radio-group">
+                    <label><input type="radio" name="gender" value="Мужской"> Мужской</label>
+                    <label><input type="radio" name="gender" value="Женский"> Женский</label>
+                    <label><input type="radio" name="gender" value="Другой"> Другой</label>
+                    <label><input type="radio" name="gender" value="Не указан" checked> Не указан</label>
+                </div>
+            </div>
+
+            <!-- 6) любимый язык программирования (множественный выбор) -->
+            <div class="field-group">
+                <label>💻 Любимые языки программирования</label>
+                <div class="input-wrapper lang-select">
+                    <select name="fav_langs" id="fav_langs" multiple size="6">
+                        <option value="Pascal">Pascal</option>
+                        <option value="C">C</option>
+                        <option value="C++">C++</option>
+                        <option value="JavaScript">JavaScript</option>
+                        <option value="PHP">PHP</option>
+                        <option value="Python">Python</option>
+                        <option value="Java">Java</option>
+                        <option value="Haskel">Haskel</option>
+                        <option value="Clojure">Clojure</option>
+                        <option value="Prolog">Prolog</option>
+                        <option value="Scala">Scala</option>
+                        <option value="Go">Go</option>
+                    </select>
+                    <div class="hint-text">Удерживайте Ctrl (Cmd) для выбора нескольких языков</div>
+                </div>
+            </div>
+
+            <!-- 7) биография (многострочное текстовое поле) -->
+            <div class="field-group">
+                <label for="bio">📝 Биография</label>
+                <div class="input-wrapper">
+                    <textarea id="bio" name="bio" placeholder="Расскажите о себе, опыте разработки, увлечениях и достижениях..."></textarea>
+                </div>
+            </div>
+
+            <!-- 8) с контрактом ознакомлен (чекбокс) -->
+            <div class="field-group">
+                <label for="contractCheck">📑 Согласие</label>
+                <div class="input-wrapper checkbox-wrapper">
+                    <input type="checkbox" id="contractCheck" name="contract_agreed" value="yes">
+                    <label for="contractCheck">Я ознакомлен(а) с условиями пользовательского соглашения и политикой обработки данных</label>
+                </div>
+            </div>
+
+            <!-- 9) кнопка «Сохранить» -->
+            <div class="action-buttons">
+                <button type="button" class="save-btn" id="saveButton">💾 Сохранить</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- всплывающее уведомление -->
+<div id="notificationToast" class="toast-message">✨ Данные сохранены (консоль)</div>
+
+<script>
+    (function() {
+        // Элементы формы
+        const form = document.getElementById('developerForm');
+        const saveBtn = document.getElementById('saveButton');
+        const toast = document.getElementById('notificationToast');
+
+        // Поля
+        const fullnameInput = document.getElementById('fullname');
+        const phoneInput = document.getElementById('phone');
+        const emailInput = document.getElementById('email');
+        const birthdateInput = document.getElementById('birthdate');
+        const genderRadios = document.querySelectorAll('input[name="gender"]');
+        const langSelect = document.getElementById('fav_langs');
+        const bioTextarea = document.getElementById('bio');
+        const contractCheckbox = document.getElementById('contractCheck');
+
+        // функция показа уведомления
+        function showMessage(text, isError = false) {
+            toast.textContent = text || (isError ? '⚠️ Проверьте обязательные поля' : '✅ Сохранено успешно');
+            if (isError) {
+                toast.style.background = "#b91c1cd9";
+                toast.style.backdropFilter = "blur(6px)";
+            } else {
+                toast.style.background = "#0f172ad9";
+                toast.style.backdropFilter = "blur(4px)";
+            }
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+                // сброс стиля фона после исчезновения
+                setTimeout(() => {
+                    toast.style.background = "#0f172ad9";
+                }, 300);
+            }, 2800);
+        }
+
+        // Валидация обязательных полей (ФИО, email, согласие с контрактом)
+        function validateRequiredFields() {
+            let isValid = true;
+            let errorMessages = [];
+
+            const fullnameVal = fullnameInput.value.trim();
+            if (fullnameVal === "") {
+                isValid = false;
+                errorMessages.push("ФИО обязательно для заполнения");
+                fullnameInput.style.borderColor = "#f87171";
+                fullnameInput.style.backgroundColor = "#fff5f5";
+            } else {
+                fullnameInput.style.borderColor = "#e2e8f0";
+                fullnameInput.style.backgroundColor = "#ffffff";
+            }
+
+            const emailVal = emailInput.value.trim();
+            const emailPattern = /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/;
+            if (emailVal === "") {
+                isValid = false;
+                errorMessages.push("E-mail обязателен");
+                emailInput.style.borderColor = "#f87171";
+                emailInput.style.backgroundColor = "#fff5f5";
+            } else if (!emailPattern.test(emailVal)) {
+                isValid = false;
+                errorMessages.push("Введите корректный e-mail (пример: name@domain.com)");
+                emailInput.style.borderColor = "#f87171";
+                emailInput.style.backgroundColor = "#fff5f5";
+            } else {
+                emailInput.style.borderColor = "#e2e8f0";
+                emailInput.style.backgroundColor = "#ffffff";
+            }
+
+            // контракт ознакомлен (обязательный чекбокс)
+            if (!contractCheckbox.checked) {
+                isValid = false;
+                errorMessages.push("Необходимо подтвердить ознакомление с контрактом");
+                contractCheckbox.style.outline = "2px solid #f87171";
+                contractCheckbox.style.borderRadius = "4px";
+            } else {
+                contractCheckbox.style.outline = "none";
+            }
+
+            if (!isValid) {
+                const errorText = errorMessages.join(", ");
+                showMessage(`❗ ${errorText}`, true);
+            }
+            return isValid;
+        }
+
+        // сбор всех данных формы в объект и вывод в консоль
+        function collectFormData() {
+            // ФИО
+            const fullname = fullnameInput.value.trim();
+
+            // телефон
+            const phone = phoneInput.value.trim();
+
+            // email
+            const email = emailInput.value.trim();
+
+            // дата рождения
+            const birthdate = birthdateInput.value;
+
+            // пол (выбранный)
+            let selectedGender = "Не указан";
+            for (let radio of genderRadios) {
+                if (radio.checked) {
+                    selectedGender = radio.value;
+                    break;
+                }
+            }
+
+            // любимые языки (множественный выбор)
+            const selectedLanguages = [];
+            for (let option of langSelect.options) {
+                if (option.selected) {
+                    selectedLanguages.push(option.value);
+                }
+            }
+
+            // биография
+            const biography = bioTextarea.value.trim();
+
+            // ознакомление с контрактом
+            const contractAccepted = contractCheckbox.checked;
+
+            // итоговый объект
+            const formData = {
+                fullName: fullname,
+                phone: phone || "(не указан)",
+                email: email,
+                birthDate: birthdate || "(не указана)",
+                gender: selectedGender,
+                favoriteLanguages: selectedLanguages.length ? selectedLanguages : ["не выбрано"],
+                biography: biography || "(пусто)",
+                contractAgreed: contractAccepted
+            };
+            return formData;
+        }
+
+        // функция сохранения: валидация + вывод в консоль + уведомление
+        function handleSave() {
+            // сначала валидируем обязательные поля
+            if (!validateRequiredFields()) {
+                return; // валидация не пройдена, уведомление уже показано
+            }
+
+            // собираем данные
+            const savedData = collectFormData();
+
+            // выводим в консоль браузера красиво
+            console.log("=== ДАННЫЕ ФОРМЫ СОХРАНЕНЫ ===");
+            console.log(JSON.stringify(savedData, null, 2));
+            console.log("📌 Подробная выгрузка:");
+            console.table({
+                "ФИО": savedData.fullName,
+                "Телефон": savedData.phone,
+                "E-mail": savedData.email,
+                "Дата рождения": savedData.birthDate,
+                "Пол": savedData.gender,
+                "Любимые языки": savedData.favoriteLanguages.join(", "),
+                "Биография (сокращенно)": savedData.biography.substring(0, 80) + (savedData.biography.length > 80 ? "…" : ""),
+                "Контракт": savedData.contractAgreed ? "✔ ознакомлен" : "✘ не ознакомлен"
+            });
+            console.log("=== КОНЕЦ ВЫГРУЗКИ ===\n");
+
+            // дополнительно показываем пользователю информативное сообщение
+            let langsPreview = savedData.favoriteLanguages.slice(0, 3).join(", ");
+            if (savedData.favoriteLanguages.length > 3) langsPreview += ` +${savedData.favoriteLanguages.length-3}`;
+            if (savedData.favoriteLanguages.length === 0) langsPreview = "языки не выбраны";
+
+            showMessage(`Сохранено! ${savedData.fullName}, языки: ${langsPreview}`, false);
+        }
+
+        // привязываем событие клика на кнопку «Сохранить»
+        saveBtn.addEventListener('click', handleSave);
+
+        // дополнительно: сброс подсветки полей при вводе
+        function resetFieldStyleOnInput(inputField) {
+            inputField.addEventListener('input', function() {
+                this.style.borderColor = "#e2e8f0";
+                this.style.backgroundColor = "#ffffff";
+                if (this === contractCheckbox) {
+                    contractCheckbox.style.outline = "none";
+                }
+            });
+        }
+        resetFieldStyleOnInput(fullnameInput);
+        resetFieldStyleOnInput(emailInput);
+        contractCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+                this.style.outline = "none";
+            }
+        });
+
+        // для красоты: если поле телефона и email необязательные, но обработаем мягко
+        phoneInput.addEventListener('input', () => {
+            phoneInput.style.borderColor = "#e2e8f0";
+        });
+    })();
+</script>
+</body>
+</html>
